@@ -24,8 +24,7 @@ public class ChallengeService {
     public Challenge findById(UUID challengeId) {
         return challengeRepository
                 .findChallengeByChallengeId(challengeId)
-                .orElseThrow(() -> new ChallengeException("The challenge with the id : "
-                        + challengeId +" was not found"));
+                .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
     }
 
     public List<Challenge> findAll() {
@@ -36,8 +35,8 @@ public class ChallengeService {
         UUID challengeId = challenge.getChallengeId();
         var existingChallenge = challengeRepository
                 .findChallengeByChallengeId(challengeId)
-                .orElseThrow(() -> new ChallengeException("The challenge with the id : "
-                        + challengeId +" was not found"));
+                .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
+
         existingChallenge.setDateStart(challenge.getDateStart());
         existingChallenge.setDateEnd(challenge.getDateEnd());
         existingChallenge.setDescription(challenge.getDescription());
@@ -49,7 +48,10 @@ public class ChallengeService {
         return challengeRepository.save(existingChallenge);
     }
 
-    public void deleteChallenge(Challenge challenge) {
-        challengeRepository.delete(challenge);
+    public void deleteChallenge(UUID challengeId) {
+        Challenge foundedChallenge = challengeRepository
+                .findChallengeByChallengeId(challengeId)
+                .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
+        challengeRepository.delete(foundedChallenge);
     }
 }

@@ -1,8 +1,8 @@
 package fr.esgi.extiaordinaryapi.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,7 +25,7 @@ public class Challenge {
     private UUID challengeId;
     @Column(name = "dateStart")
     private LocalDateTime dateStart;
-    @Column(name = "dateStart")
+    @Column(name = "dateEnd")
     private LocalDateTime dateEnd;
     @Column(name = "description")
     private String description;

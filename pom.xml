@@ -5,9 +5,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.7.5</version>
+        <relativePath/>
     </parent>
+
     <groupId>fr.esgi</groupId>
     <artifactId>extiaordinary-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
