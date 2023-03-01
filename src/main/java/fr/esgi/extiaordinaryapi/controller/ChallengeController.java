@@ -1,34 +1,36 @@
 package fr.esgi.extiaordinaryapi.controller;
 
-import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
+import fr.esgi.extiaordinaryapi.dto.CreateChallengeDto;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.service.ChallengeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/challenge")
+@RequestMapping(value = "/api/v1")
 public class ChallengeController {
 
-    private final ChallengeService challengeService;
+    final ChallengeService challengeService;
 
-    @PostMapping(path = "/add")
-    public ResponseEntity<Object> createChallenge(CreateChallengeRequest createChallengeRequest) {
-            return ResponseEntity.ok(
-                    challengeService.createChallenge(
+    @PostMapping
+    public Challenge createChallenge(@RequestBody @Valid CreateChallengeDto createChallengeDto) {
+            return challengeService.createChallenge(
                             Challenge.builder()
-                                    .dateStart(createChallengeRequest.dateStart())
-                                    .dateEnd(createChallengeRequest.dateEnd())
-                                    .description(createChallengeRequest.description())
-                                    .typeSport(createChallengeRequest.typeSport())
-                                    .collaboratorChallenger(createChallengeRequest.collaboratorChallenger())
-                                    .collaboratorChallenged(createChallengeRequest.collaboratorChallenged())
-                                    .workout(createChallengeRequest.workout())
-                                    .isAchieved(createChallengeRequest.isAchieved())
-                                    .build()));
+                                    .dateStart(createChallengeDto.dateStart())
+                                    .dateEnd(createChallengeDto.dateEnd())
+                                    .description(createChallengeDto.description())
+                                    .typeSport(createChallengeDto.typeSport())
+                                    .collaboratorChallenger(createChallengeDto.collaboratorChallenger())
+                                    .collaboratorChallenged(createChallengeDto.collaboratorChallenged())
+                                    .workout(createChallengeDto.workout())
+                                    .isAchieved(createChallengeDto.isAchieved())
+                                    .build());
+    }
+
+    @GetMapping
+    public String test() {
+        return "test";
     }
 }
