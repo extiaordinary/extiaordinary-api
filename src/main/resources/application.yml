@@ -1,0 +1,21 @@
+server:
+  port: 8080
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/extiaordinary
+    username: postgres
+    password: password
+    hikari:
+      connection-timeout: 30000
+      minimum-idle: 1
+      maximum-pool-size: 5
+      idle-timeout: 60000
+      max-lifetime: 1800000
+      pool-name: extiaordinary-pool
