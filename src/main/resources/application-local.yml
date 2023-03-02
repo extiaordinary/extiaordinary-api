@@ -14,7 +14,7 @@ spring:
         show_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/extiaordinary
+    url: jdbc:postgresql://localhost:5432/extiaordinary
     username: postgres
     password: password
     hikari:
