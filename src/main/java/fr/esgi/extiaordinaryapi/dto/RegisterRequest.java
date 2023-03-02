@@ -31,5 +31,5 @@ public class RegisterRequest {
     private String role;
     @NotNull
     @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dateOfBirth;
+    private LocalDate dateOfBirth; // TODO verify age
 }

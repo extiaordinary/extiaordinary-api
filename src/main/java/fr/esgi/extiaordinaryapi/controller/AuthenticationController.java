@@ -26,7 +26,7 @@ public class AuthenticationController {
             @RequestBody @Valid RegisterRequest request
     ) {
         try {
-            return ResponseEntity.ok(authenticationService.register(request));
+            return ResponseEntity.ok(authenticationService.registerUser(request));
         } catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -37,7 +37,7 @@ public class AuthenticationController {
             @RequestBody @Valid LoginRequest request
     ) {
         try {
-            return ResponseEntity.ok(authenticationService.authenticate(request));
+            return ResponseEntity.ok(authenticationService.authenticateUser(request));
         } catch (Exception e){
             return new ResponseEntity("Authentication failed", HttpStatus.FORBIDDEN); // TODO change
         }
