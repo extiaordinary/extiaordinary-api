@@ -45,7 +45,7 @@ public class SeanceController {
     public ResponseEntity<Object> updateSeance(@RequestBody @Valid UpdateSeanceRequest seanceDto) {
         try {
             val coach = User.builder()
-                    .id(UUID.fromString(seanceDto.coachId()))
+                    .userId(UUID.fromString(seanceDto.coachId()))
                     .build();
             return ResponseEntity.ok(
                     seanceService.updateSeance(

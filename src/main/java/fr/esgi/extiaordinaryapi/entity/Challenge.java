@@ -23,30 +23,44 @@ public class Challenge {
             unique = true,
             updatable = false
     )
+
     @NotNull
     private UUID challengeId;
+
     @Column(name = "dateStart")
     @NotNull
     private LocalDateTime dateStart;
+
     @Column(name = "dateEnd")
     @NotNull
     private LocalDateTime dateEnd;
+
     @Column(name = "description")
     @NotNull
     private String description;
+
     @Column(name = "typeSport")
     @NotNull
     private String typeSport;
-    @Column(name = "collaboratorChallenger")
+
     @NotNull
-    private UUID collaboratorChallenger;
-    @Column(name = "collaboratorChallenged")
-    @NotNull
-    private UUID collaboratorChallenged;
+    @ManyToOne
+    @JoinColumn(name = "collaboratorChallenger")
+    private User collaboratorChallenger;
+
+    @ManyToOne
+    @JoinColumn(name = "collaboratorChallenged")
+    private User collaboratorChallenged;
+
     @Column(name = "workout")
     @NotNull
     private UUID workout;
+
     @Column(name = "achieved")
     @NotNull
     private Boolean isAchieved;
+
+    @Column(name = "tag")
+    @NotNull
+    private String tag;
 }

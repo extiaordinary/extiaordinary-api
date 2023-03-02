@@ -32,13 +32,10 @@ public class User implements UserDetails {
     private String password;
     private LocalDate dateOfBirth;
     private int points;
-
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
     @ManyToMany
-    private Set<Seance>  seancesPlayed;
+    private Set<Seance> seancesPlayed;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,7 +66,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
     // TODO: add metrics
 }
