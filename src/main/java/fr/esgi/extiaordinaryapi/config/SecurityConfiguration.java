@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/api/v1/auth/**").permitAll()
-                .antMatchers("/api/v1/challenge/").permitAll()
+                .antMatchers("/api/v1/challenge/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

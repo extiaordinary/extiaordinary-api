@@ -17,7 +17,6 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-
     @NotNull
     private String firstname;
     @NotNull
