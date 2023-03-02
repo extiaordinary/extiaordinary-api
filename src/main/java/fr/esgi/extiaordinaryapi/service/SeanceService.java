@@ -148,7 +148,7 @@ public class SeanceService {
     }
 
     public List<SeanceListResponse> getMySeancesAsPlayer(User user) {
-        val seances = seanceRepository.findAllByUsersPlayed(user);
+        List<Seance> seances = user.getSeancesPlayed().stream().toList();
         return SeanceInitializer.listSeanceResponse(seances);
     }
 }
