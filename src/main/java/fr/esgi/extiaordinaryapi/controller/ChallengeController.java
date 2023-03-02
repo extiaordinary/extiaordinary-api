@@ -19,12 +19,10 @@ import java.util.UUID;
 public class ChallengeController {
 
     private final ChallengeService challengeService;
-    private final UserService userService;
-
-    @GetMapping(path = "/ownChallenges")
-    public ResponseEntity<Object> ownChallenges() {
+    @GetMapping(path = "/ownChallenges/{collaboratorChallengerId}")
+    public ResponseEntity<Object> ownChallenges(@PathVariable @Valid UUID collaboratorChallengerId) {
         try {
-            return ResponseEntity.ok(challengeService.findOwnChallenge());
+            return ResponseEntity.ok(challengeService.findOwnChallenge(collaboratorChallengerId));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }

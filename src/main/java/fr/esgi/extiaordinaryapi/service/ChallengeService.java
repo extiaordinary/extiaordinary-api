@@ -25,9 +25,8 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserService userService;
 
-    public List<Challenge> findOwnChallenge(){
-        User collaboratorChallenged = userService.getCurrentUser();
-        return challengeRepository.findByCollaboratorChallenger_UserId(collaboratorChallenged.getUserId());
+    public List<Challenge> findOwnChallenge(UUID collaboratorChallengedId){
+        return challengeRepository.findByCollaboratorChallenger_UserId(collaboratorChallengedId);
     }
 
     public List<Challenge> findToDoChallenge(){
