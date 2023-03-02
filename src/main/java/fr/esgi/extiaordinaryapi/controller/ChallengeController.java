@@ -14,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/challenge")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ChallengeController {
 
     private final ChallengeService challengeService;

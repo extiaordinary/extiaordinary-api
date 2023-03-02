@@ -17,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "api/v1/seance")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SeanceController {
 
     private final SeanceService seanceService;
