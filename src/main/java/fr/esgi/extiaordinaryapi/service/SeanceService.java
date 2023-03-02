@@ -39,7 +39,8 @@ public class SeanceService {
             if (seance.getDateStart().isBefore(LocalDateTime.now())) {
                 throw new IllegalArgumentException("Date start is before now");
             }
-            return seanceRepository.save(seance);
+            val seanceSave = seanceRepository.save(seance);
+            return seanceSave;
         } catch (Exception e) {
             log.error("Error while creating seance", e);
             throw new RuntimeException("Error while creating seance", e);

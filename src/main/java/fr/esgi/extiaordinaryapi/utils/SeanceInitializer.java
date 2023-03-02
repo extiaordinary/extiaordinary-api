@@ -27,6 +27,22 @@ public interface SeanceInitializer {
 
     }
 
+    static SeanceResponse updateSeance(Seance seance, Set<User> participants){
+        return new SeanceResponse(
+                seance.getSeanceId().toString(),
+                seance.getName(),
+                seance.getDescription(),
+                seance.getRewardPoint(),
+                seance.getDateStart().toString(),
+                seance.getDateEnd().toString(),
+                UserInitializer.mappingUserResponse(seance.getCoach()),
+                participants.stream()
+                        .map(UserInitializer::mappingUserResponse)
+                        .collect(java.util.stream.Collectors.toList())
+        );
+
+    }
+
     static List<SeanceListResponse> listSeanceResponse(List<Seance> seances){
         return seances.stream()
                 .map(seance -> new SeanceListResponse(
