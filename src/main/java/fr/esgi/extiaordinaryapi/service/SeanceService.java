@@ -73,7 +73,7 @@ public class SeanceService {
         if (findSeance.isEmpty()) {
             throw new IllegalArgumentException("Seance not found");
         }
-        if(findSeance.get().getCoach().getId() != user.getId()) {
+        if(findSeance.get().getCoach().getUserId() != user.getUserId()) {
             throw new IllegalArgumentException("User is not coach");
         }
         val localDateTime = LocalDateTime.now();
@@ -112,7 +112,7 @@ public class SeanceService {
         if (findSeance.isEmpty()) {
             throw new IllegalArgumentException("Seance not found");
         }
-        if (findSeance.get().getCoach().getId() == user.getId()) {
+        if (findSeance.get().getCoach().getUserId() == user.getUserId()) {
             throw new IllegalArgumentException("User is coach");
         }
         val localDateTime = LocalDateTime.now();
@@ -123,7 +123,7 @@ public class SeanceService {
             val addSeanceToUser = user.getSeancesPlayed();
             addSeanceToUser.add(findSeance.get());
             userRepository.save(User.builder()
-                    .id(user.getId())
+                    .userId(user.getUserId())
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
                     .email(user.getEmail())
