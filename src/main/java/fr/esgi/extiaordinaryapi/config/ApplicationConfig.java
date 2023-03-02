@@ -1,6 +1,8 @@
 package fr.esgi.extiaordinaryapi.config;
 
+import fr.esgi.extiaordinary.filter.JwtAuthenticationFilter;
 import fr.esgi.extiaordinaryapi.repository.UserRepository;
+import fr.esgi.extiaordinaryapi.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,5 +43,10 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtService jwtService) {
+        return new JwtAuthenticationFilter(userDetailsService(), jwtService);
     }
 }
