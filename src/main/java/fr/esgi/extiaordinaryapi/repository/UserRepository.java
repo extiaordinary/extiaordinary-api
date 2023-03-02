@@ -12,5 +12,10 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByEmail(String email);
+
     List<User> findAllBySeancesPlayed(Seance seance);
+
+    @Query("SELECT u FROM User u ORDER BY u.points DESC")
+    List<User> findAllUsersOrderByPointsDesc();
+
 }
