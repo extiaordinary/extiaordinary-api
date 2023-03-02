@@ -1,6 +1,6 @@
 package fr.esgi.extiaordinaryapi.config;
 
-import fr.esgi.extiaordinary.filter.JwtAuthenticationFilter;
+import fr.esgi.extiaordinaryapi.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

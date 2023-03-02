@@ -1,5 +1,8 @@
 server:
-  port: 5000
+  address: 0.0.0.0
+  port: 8080
+  compression:
+    enabled: true
 
 spring:
   jpa:
@@ -11,7 +14,7 @@ spring:
         show_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://extiaordinary.chv6lgui48bg.eu-west-1.rds.amazonaws.com:5432/extiaordinary
+    url: jdbc:postgresql://localhost:5432/extiaordinary
     username: postgres
     password: password
     hikari:
@@ -21,6 +24,6 @@ spring:
       idle-timeout: 60000
       max-lifetime: 1800000
       pool-name: extiaordinary-pool
-
+      
 jwt:
   secret: "4E645267556B58703273357638782F413F4428472B4B6250655368566D597133"

@@ -1,6 +1,6 @@
 package fr.esgi.extiaordinaryapi.config;
 
-import fr.esgi.extiaordinary.filter.JwtAuthenticationFilter;
+import fr.esgi.extiaordinaryapi.filter.JwtAuthenticationFilter;
 import fr.esgi.extiaordinaryapi.repository.UserRepository;
 import fr.esgi.extiaordinaryapi.service.JwtService;
 import lombok.RequiredArgsConstructor;

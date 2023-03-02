@@ -1,4 +1,4 @@
-package fr.esgi.extiaordinary.filter;
+package fr.esgi.extiaordinaryapi.filter;
 
 import fr.esgi.extiaordinaryapi.service.JwtService;
 import lombok.RequiredArgsConstructor;
