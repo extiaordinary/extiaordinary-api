@@ -105,4 +105,13 @@ public class SeanceController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/mySeances/coach")
+    public ResponseEntity<Object> getMySeancesAsCoach() {
+        try {
+            return ResponseEntity.ok(seanceService.getMySeancesAsCoach(userService.getCurrentUser()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

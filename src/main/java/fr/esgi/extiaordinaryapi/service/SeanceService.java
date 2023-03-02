@@ -140,4 +140,15 @@ public class SeanceService {
             throw new RuntimeException("Error while adding seance to user", e);
         }
     }
+
+
+    public List<SeanceListResponse> getMySeancesAsCoach(User user) {
+        val seances = seanceRepository.findAllByCoach(user);
+        return SeanceInitializer.listSeanceResponse(seances);
+    }
+
+    public List<SeanceListResponse> getMySeancesAsPlayer(User user) {
+        val seances = seanceRepository.findAllByUsersPlayed(user);
+        return SeanceInitializer.listSeanceResponse(seances);
+    }
 }
