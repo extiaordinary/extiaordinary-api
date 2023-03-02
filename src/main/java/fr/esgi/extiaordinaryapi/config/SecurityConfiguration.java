@@ -24,7 +24,7 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/health").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/api/v1/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
