@@ -2,7 +2,6 @@ package fr.esgi.extiaordinaryapi.utils;
 
 import fr.esgi.extiaordinaryapi.dto.SeanceListResponse;
 import fr.esgi.extiaordinaryapi.dto.SeanceResponse;
-import fr.esgi.extiaordinaryapi.dto.UserResponse;
 import fr.esgi.extiaordinaryapi.entity.Seance;
 import fr.esgi.extiaordinaryapi.entity.User;
 
@@ -20,6 +19,7 @@ public interface SeanceInitializer {
                 seance.getDateStart().toString(),
                 seance.getDateEnd().toString(),
                 UserInitializer.mappingUserResponse(seance.getCoach()),
+                seance.getImage().toString(),
                 participants.stream()
                         .map(UserInitializer::mappingUserResponse)
                         .collect(java.util.stream.Collectors.toList())
@@ -36,6 +36,7 @@ public interface SeanceInitializer {
                 seance.getDateStart().toString(),
                 seance.getDateEnd().toString(),
                 UserInitializer.mappingUserResponse(seance.getCoach()),
+                seance.getImage().toString(),
                 participants.stream()
                         .map(UserInitializer::mappingUserResponse)
                         .collect(java.util.stream.Collectors.toList())
@@ -52,6 +53,7 @@ public interface SeanceInitializer {
                         seance.getRewardPoint(),
                         seance.getDateStart().toString(),
                         seance.getDateEnd().toString(),
+                        seance.getImage().toString(),
                         UserInitializer.mappingUserResponse(seance.getCoach())
                 ))
                 .collect(java.util.stream.Collectors.toList());

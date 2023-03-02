@@ -7,6 +7,9 @@ public record SeanceListResponse(
         int rewardPoint,
         String dateStart,
         String dateEnd,
+        String image,
 
         UserResponse coach
+
+
 ) { }
