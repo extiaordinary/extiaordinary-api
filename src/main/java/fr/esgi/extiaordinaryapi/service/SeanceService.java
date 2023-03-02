@@ -54,7 +54,6 @@ public class SeanceService {
                         .dateStart(seance.getDateStart())
                         .dateEnd(seance.getDateEnd())
                         .rewardPoint(seance.getRewardPoint())
-                        .coachId(seance.getCoachId())
                         .creationDate(findSeance.get().getCreationDate())
                         .build()
         );

@@ -4,6 +4,7 @@ import fr.esgi.extiaordinaryapi.dto.CreateSeanceRequest;
 import fr.esgi.extiaordinaryapi.dto.UpdateSeanceRequest;
 import fr.esgi.extiaordinaryapi.entity.Seance;
 import fr.esgi.extiaordinaryapi.service.SeanceService;
+import fr.esgi.extiaordinaryapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class SeanceController {
 
     private final SeanceService seanceService;
+    private final UserService userService;
 
     @PostMapping(path = "/add")
     public ResponseEntity<Object> createSeance(@RequestBody @Valid CreateSeanceRequest seanceDto) {
@@ -29,7 +31,7 @@ public class SeanceController {
                                     .dateStart(seanceDto.dateStart())
                                     .dateEnd(seanceDto.dateEnd())
                                     .rewardPoint(seanceDto.rewardPoint())
-                                    .coachId(UUID.fromString(seanceDto.coachId()))
+                                    .coach(userService.getCurrentUser())
                                     .build()
                     ));
         } catch (Exception e) {
@@ -49,7 +51,6 @@ public class SeanceController {
                                     .dateStart(seanceDto.dateStart())
                                     .dateEnd(seanceDto.dateEnd())
                                     .rewardPoint(seanceDto.rewardPoint())
-                                    .coachId(UUID.fromString(seanceDto.coachId()))
                                     .build()
                     )
             );

@@ -32,8 +32,8 @@ public class Seance {
     private String name;
     @Column(nullable = false)
     private String description;
-    @Column(nullable = false)
-    private UUID coachId;
+    @OneToOne
+    private User coach;
     @Column(nullable = false)
     private int rewardPoint;
     @Column(nullable = false, updatable = false)
