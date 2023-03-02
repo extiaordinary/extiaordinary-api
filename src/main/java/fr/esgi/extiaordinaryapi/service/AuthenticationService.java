@@ -1,8 +1,8 @@
 package fr.esgi.extiaordinaryapi.service;
 
-import fr.esgi.extiaordinaryapi.dto.JwtToken;
-import fr.esgi.extiaordinaryapi.dto.LoginDto;
-import fr.esgi.extiaordinaryapi.dto.RegisterDto;
+import fr.esgi.extiaordinaryapi.dto.JwtTokenResponse;
+import fr.esgi.extiaordinaryapi.dto.LoginRequest;
+import fr.esgi.extiaordinaryapi.dto.RegisterRequest;
 import fr.esgi.extiaordinaryapi.entity.Role;
 import fr.esgi.extiaordinaryapi.entity.User;
 import fr.esgi.extiaordinaryapi.repository.UserRepository;
@@ -22,22 +22,22 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public JwtToken register(RegisterDto request) {
+    public JwtTokenResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(Role.valueOf(request.getRole()))
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return JwtToken.builder()
+        return JwtTokenResponse.builder()
                 .token(jwtToken)
                 .build();
     }
 
-    public JwtToken authenticate(LoginDto request) {
+    public JwtTokenResponse authenticate(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -47,7 +47,7 @@ public class AuthenticationService {
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow(RuntimeException::new);
         var jwtToken = jwtService.generateToken(user);
-        return JwtToken.builder()
+        return JwtTokenResponse.builder()
                 .token(jwtToken)
                 .build();
     }

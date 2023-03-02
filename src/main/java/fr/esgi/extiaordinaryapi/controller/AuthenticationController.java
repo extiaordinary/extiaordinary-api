@@ -1,8 +1,8 @@
 package fr.esgi.extiaordinaryapi.controller;
 
-import fr.esgi.extiaordinaryapi.dto.JwtToken;
-import fr.esgi.extiaordinaryapi.dto.LoginDto;
-import fr.esgi.extiaordinaryapi.dto.RegisterDto;
+import fr.esgi.extiaordinaryapi.dto.JwtTokenResponse;
+import fr.esgi.extiaordinaryapi.dto.LoginRequest;
+import fr.esgi.extiaordinaryapi.dto.RegisterRequest;
 import fr.esgi.extiaordinaryapi.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,16 +12,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<JwtToken> register(
-            @RequestBody RegisterDto request
+    public ResponseEntity<JwtTokenResponse> register(
+            @RequestBody @Valid RegisterRequest request
     ) {
         try {
             return ResponseEntity.ok(authenticationService.register(request));
@@ -32,7 +34,7 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity authenticate(
-            @RequestBody LoginDto request
+            @RequestBody @Valid LoginRequest request
     ) {
         try {
             return ResponseEntity.ok(authenticationService.authenticate(request));

@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterDto {
-
-    private String firstname;
-    private String lastname;
+public class LoginRequest {
+    @NotNull
+    @Email
     private String email;
-    private String password;
+    @NotNull
+    String password;
 }
