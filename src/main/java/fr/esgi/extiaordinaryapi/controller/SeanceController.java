@@ -2,7 +2,7 @@ package fr.esgi.extiaordinaryapi.controller;
 
 import fr.esgi.extiaordinaryapi.dto.CreateSeanceRequest;
 import fr.esgi.extiaordinaryapi.dto.UpdateSeanceRequest;
-import fr.esgi.extiaordinaryapi.entity.SeanceEntity;
+import fr.esgi.extiaordinaryapi.entity.Seance;
 import fr.esgi.extiaordinaryapi.service.SeanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +13,17 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/seance")
+@RequestMapping(path = "api/v1/seance")
 public class SeanceController {
 
     private final SeanceService seanceService;
 
-    @PostMapping
+    @PostMapping(path = "/add")
     public ResponseEntity<Object> createSeance(@RequestBody @Valid CreateSeanceRequest seanceDto) {
         try {
             return ResponseEntity.ok(
                     seanceService.createSeance(
-                            SeanceEntity.builder()
+                            Seance.builder()
                                     .name(seanceDto.name())
                                     .description(seanceDto.description())
                                     .dateStart(seanceDto.dateStart())
@@ -37,12 +37,12 @@ public class SeanceController {
         }
     }
 
-    @PutMapping
+    @PutMapping(path = "/update")
     public ResponseEntity<Object> updateSeance(@RequestBody @Valid UpdateSeanceRequest seanceDto) {
         try {
             return ResponseEntity.ok(
                     seanceService.updateSeance(
-                            SeanceEntity.builder()
+                            Seance.builder()
                                     .seanceId(UUID.fromString(seanceDto.id()))
                                     .name(seanceDto.name())
                                     .description(seanceDto.description())
@@ -59,7 +59,7 @@ public class SeanceController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getSeance() {
+    public ResponseEntity<Object> getSeances() {
         try {
             return ResponseEntity.ok(seanceService.getSeances());
         } catch (Exception e) {
@@ -67,19 +67,19 @@ public class SeanceController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getSeanceById(@PathVariable UUID id) {
+    @GetMapping("/{seanceId}")
+    public ResponseEntity<Object> getSeanceById(@PathVariable UUID seanceId) {
         try {
-            return ResponseEntity.ok(seanceService.getSeanceById(id));
+            return ResponseEntity.ok(seanceService.getSeanceById(seanceId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteSeance(@PathVariable UUID id) {
+    @DeleteMapping("/delete/{seanceId}")
+    public ResponseEntity<Object> deleteSeance(@PathVariable UUID seanceId) {
         try {
-            seanceService.deleteSeance(id);
+            seanceService.deleteSeance(seanceId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

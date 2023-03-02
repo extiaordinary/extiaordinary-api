@@ -1,10 +1,11 @@
 package fr.esgi.extiaordinaryapi.service;
 
-import fr.esgi.extiaordinaryapi.entity.SeanceEntity;
+import fr.esgi.extiaordinaryapi.entity.Seance;
 import fr.esgi.extiaordinaryapi.repository.SeanceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,13 +13,14 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class SeanceService {
 
     private final int MAX_POINT = 445;
 
     private final SeanceRepository seanceRepository;
 
-    public SeanceEntity createSeance(SeanceEntity seance) {
+    public Seance createSeance(Seance seance) {
         try {
             if (seance.getRewardPoint() > MAX_POINT) {
                 throw new IllegalArgumentException("Reward point is too high");
@@ -36,7 +38,7 @@ public class SeanceService {
         }
     }
 
-    public SeanceEntity updateSeance(SeanceEntity seance) {
+    public Seance updateSeance(Seance seance) {
         if (seance.getRewardPoint() > MAX_POINT) {
             throw new IllegalArgumentException("Reward point is too high");
         }
@@ -45,7 +47,7 @@ public class SeanceService {
             throw new IllegalArgumentException("Seance not found");
         }
         return createSeance(
-                SeanceEntity.builder()
+                Seance.builder()
                         .seanceId(seance.getSeanceId())
                         .name(seance.getName())
                         .description(seance.getDescription())
@@ -58,7 +60,7 @@ public class SeanceService {
         );
     }
 
-    public SeanceEntity getSeanceById(UUID id) {
+    public Seance getSeanceById(UUID id) {
         val findSeance = seanceRepository.findById(id);
         if (findSeance.isEmpty()) {
             throw new IllegalArgumentException("Seance not found");
@@ -66,7 +68,7 @@ public class SeanceService {
         return findSeance.get();
     }
 
-    public List<SeanceEntity> getSeances() {
+    public List<Seance> getSeances() {
         return seanceRepository.findAll();
     }
 
@@ -82,6 +84,4 @@ public class SeanceService {
             throw new RuntimeException("Error while deleting seance", e);
         }
     }
-
-
 }

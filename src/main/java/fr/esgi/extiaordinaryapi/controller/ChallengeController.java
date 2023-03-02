@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,7 +19,7 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Challenge> createChallenge(@RequestBody @Valid CreateChallengeRequest createChallengeRequest) {
+    public ResponseEntity<Object> createChallenge(@RequestBody @Valid CreateChallengeRequest createChallengeRequest) {
         try {
             return ResponseEntity.ok(challengeService.createChallenge(
                     Challenge.builder()
@@ -34,30 +33,30 @@ public class ChallengeController {
                             .isAchieved(createChallengeRequest.isAchieved())
                             .build()));
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
 
     @GetMapping(path = "/{idChallenge}")
-    public ResponseEntity<Challenge> findChallengeById(@PathVariable @Valid UUID idChallenge) {
+    public ResponseEntity<Object> findChallengeById(@PathVariable @Valid UUID idChallenge) {
         try {
             return ResponseEntity.ok(challengeService.findById(idChallenge));
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Challenge>> findAllChallenge() {
+    public ResponseEntity<Object> findAllChallenge() {
         try {
             return ResponseEntity.ok(challengeService.findAll());
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Challenge> updateChallenge(@RequestBody @Valid UpdateChallengeRequest updateChallengeRequest) {
+    public ResponseEntity<Object> updateChallenge(@RequestBody @Valid UpdateChallengeRequest updateChallengeRequest) {
         try {
             return ResponseEntity.ok(challengeService.updateChallenge(
                     Challenge.builder()
@@ -72,7 +71,7 @@ public class ChallengeController {
                             .isAchieved(updateChallengeRequest.isAchieved())
                             .build()));
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
 
@@ -83,7 +82,7 @@ public class ChallengeController {
             return ResponseEntity.ok("The user with the id : %s has been deleted !"
                     .formatted(challengeId));
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
 }
