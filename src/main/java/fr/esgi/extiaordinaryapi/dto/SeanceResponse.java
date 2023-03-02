@@ -1,9 +1,6 @@
 package fr.esgi.extiaordinaryapi.dto;
 
-import fr.esgi.extiaordinaryapi.entity.User;
-
 import java.util.List;
-import java.util.Set;
 
 public record SeanceResponse(
         String id,
@@ -14,6 +11,8 @@ public record SeanceResponse(
         String dateEnd,
 
         UserResponse coach,
+
+        String image,
 
         List<UserResponse> participants
 ){}

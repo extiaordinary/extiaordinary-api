@@ -34,6 +34,7 @@ public class SeanceController {
                                     .dateEnd(seanceDto.dateEnd())
                                     .rewardPoint(seanceDto.rewardPoint())
                                     .coach(userService.getCurrentUser())
+                                    .image(seanceDto.image())
                                     .build()
                     ));
         } catch (Exception e) {
@@ -57,6 +58,7 @@ public class SeanceController {
                                     .dateEnd(seanceDto.dateEnd())
                                     .rewardPoint(seanceDto.rewardPoint())
                                     .coach(coach)
+                                    .image(seanceDto.image())
                                     .build(),
                             userService.getCurrentUser()
                     )
@@ -95,7 +97,7 @@ public class SeanceController {
     }
 
     @PostMapping("/addUser/{seanceId}")
-    public ResponseEntity<Object> addUserToSeance(@PathVariable UUID seanceId  ) {
+    public ResponseEntity<Object> addUserToSeance(@PathVariable UUID seanceId) {
         try {
             return ResponseEntity.ok(seanceService.addUserToSeance(seanceId, userService.getCurrentUser()));
         } catch (Exception e) {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
@@ -24,6 +25,9 @@ public record CreateSeanceRequest(
         @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm")
         LocalDateTime dateEnd,
         @JsonProperty("coach")
-        String coachId
+        String coachId,
+
+        @JsonProperty("image")
+        URI image
 ) {
 }

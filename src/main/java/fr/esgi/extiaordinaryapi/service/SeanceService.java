@@ -62,6 +62,7 @@ public class SeanceService {
                         .dateEnd(seance.getDateEnd())
                         .rewardPoint(seance.getRewardPoint())
                         .creationDate(findSeance.get().getCreationDate())
+                        .image(seance.getImage())
                         .coach(seance.getCoach())
                         .build()
         );

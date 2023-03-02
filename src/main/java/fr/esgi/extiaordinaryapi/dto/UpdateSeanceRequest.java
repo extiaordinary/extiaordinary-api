@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
+import java.net.URI;
 import java.time.LocalDateTime;
 
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
@@ -26,6 +27,9 @@ public record UpdateSeanceRequest(
         @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm")
         LocalDateTime dateEnd,
         @JsonProperty("coach")
-        String coachId
+        String coachId,
+
+        @JsonProperty("image")
+        URI image
 ) {
 }

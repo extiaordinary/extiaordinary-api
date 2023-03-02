@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -39,4 +40,9 @@ public class Seance {
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime creationDate;
+
+    @Column(nullable = false)
+    private URI image;
+
+
 }
