@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -34,6 +35,10 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+
+    @ManyToMany
+    private Set<Seance>  seancesPlayed;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
