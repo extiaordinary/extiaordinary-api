@@ -1,4 +1,4 @@
-package fr.esgi.extiaordinary.filter;
+package fr.esgi.extiaordinaryapi.filter;
 
 import fr.esgi.extiaordinaryapi.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
+
     private final JwtService jwtService;
 
     @Override
@@ -26,7 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }

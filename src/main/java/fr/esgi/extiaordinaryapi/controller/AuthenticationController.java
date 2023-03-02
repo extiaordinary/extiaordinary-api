@@ -27,7 +27,7 @@ public class AuthenticationController {
     ) {
         try {
             return ResponseEntity.ok(authenticationService.registerUser(request));
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -38,10 +38,8 @@ public class AuthenticationController {
     ) {
         try {
             return ResponseEntity.ok(authenticationService.authenticateUser(request));
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity("Authentication failed", HttpStatus.FORBIDDEN); // TODO change
         }
     }
-
-
 }
