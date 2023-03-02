@@ -4,7 +4,9 @@ import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
 import fr.esgi.extiaordinaryapi.dto.UpdateChallengeRequest;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.service.ChallengeService;
+import fr.esgi.extiaordinaryapi.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,21 +20,37 @@ import java.util.UUID;
 public class ChallengeController {
 
     private final ChallengeService challengeService;
+    @GetMapping(path = "/ownChallenges/{collaboratorChallengerId}")
+    public ResponseEntity<Object> ownChallenges(@PathVariable @Valid UUID collaboratorChallengerId) {
+        try {
+            return ResponseEntity.ok(challengeService.findOwnChallenge(collaboratorChallengerId));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
+    @GetMapping(path = "/toDoChallenges")
+    public ResponseEntity<Object> toDoChallenges() {
+        try {
+            return ResponseEntity.ok(challengeService.findToDoChallenge());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
+    @PostMapping(path = "/accept/{challengeId}")
+    public ResponseEntity<Object> acceptChallenge(@PathVariable @Valid UUID challengeId) {
+        try {
+            return ResponseEntity.ok(challengeService.acceptChallenge(challengeId));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
 
     @PostMapping(path = "/add")
     public ResponseEntity<Object> createChallenge(@RequestBody @Valid CreateChallengeRequest createChallengeRequest) {
         try {
-            return ResponseEntity.ok(challengeService.createChallenge(
-                    Challenge.builder()
-                            .dateStart(createChallengeRequest.dateStart())
-                            .dateEnd(createChallengeRequest.dateEnd())
-                            .description(createChallengeRequest.description())
-                            .typeSport(createChallengeRequest.typeSport())
-                            .collaboratorChallenger(createChallengeRequest.collaboratorChallenger())
-                            .collaboratorChallenged(createChallengeRequest.collaboratorChallenged())
-                            .workout(createChallengeRequest.workout())
-                            .isAchieved(createChallengeRequest.isAchieved())
-                            .build()));
+            return ResponseEntity.ok(challengeService.createChallenge(createChallengeRequest));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }

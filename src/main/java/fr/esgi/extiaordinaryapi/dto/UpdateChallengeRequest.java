@@ -3,6 +3,7 @@ package fr.esgi.extiaordinaryapi.dto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.esgi.extiaordinaryapi.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -32,10 +33,10 @@ public record UpdateChallengeRequest(
         String typeSport,
         @NotNull
         @JsonProperty("collaboratorChallenger")
-        UUID collaboratorChallenger,
+        User collaboratorChallenger,
         @NotNull
         @JsonProperty("collaboratorChallenged")
-        UUID collaboratorChallenged,
+        User collaboratorChallenged,
         @NotNull
         @JsonProperty("workout")
         UUID workout,

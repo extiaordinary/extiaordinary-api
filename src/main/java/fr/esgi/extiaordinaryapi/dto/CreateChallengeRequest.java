@@ -28,16 +28,14 @@ public record CreateChallengeRequest(
         @JsonProperty("typeSport")
         String typeSport,
         @NotNull
-        @JsonProperty("collaboratorChallenger")
-        UUID collaboratorChallenger,
-        @NotNull
-        @JsonProperty("collaboratorChallenged")
-        UUID collaboratorChallenged,
-        @NotNull
         @JsonProperty("workout")
         UUID workout,
         @NotNull
         @JsonProperty("isAchieved")
-        boolean isAchieved
+        boolean isAchieved,
+        @NotNull
+        @JsonProperty("tag")
+        String tag
 ) {
+
 }
