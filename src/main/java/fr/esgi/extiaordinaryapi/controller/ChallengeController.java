@@ -1,10 +1,11 @@
 package fr.esgi.extiaordinaryapi.controller;
 
-import fr.esgi.extiaordinaryapi.dto.CreateChallengeRquest;
+import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
 import fr.esgi.extiaordinaryapi.dto.UpdateChallengeRequest;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.service.ChallengeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,51 +17,73 @@ import java.util.UUID;
 @RequestMapping(value = "/api/v1/challenge")
 public class ChallengeController {
 
-    final ChallengeService challengeService;
+    private final ChallengeService challengeService;
 
-    @PostMapping
-    public Challenge createChallenge(@RequestBody @Valid CreateChallengeRquest createChallengeRquest) {
-        return challengeService.createChallenge(
-                Challenge.builder()
-                        .dateStart(createChallengeRquest.dateStart())
-                        .dateEnd(createChallengeRquest.dateEnd())
-                        .description(createChallengeRquest.description())
-                        .typeSport(createChallengeRquest.typeSport())
-                        .collaboratorChallenger(createChallengeRquest.collaboratorChallenger())
-                        .collaboratorChallenged(createChallengeRquest.collaboratorChallenged())
-                        .workout(createChallengeRquest.workout())
-                        .isAchieved(createChallengeRquest.isAchieved())
-                        .build());
+    @PostMapping(path = "/add")
+    public ResponseEntity<Challenge> createChallenge(@RequestBody @Valid CreateChallengeRequest createChallengeRequest) {
+        try {
+            return ResponseEntity.ok(challengeService.createChallenge(
+                    Challenge.builder()
+                            .dateStart(createChallengeRequest.dateStart())
+                            .dateEnd(createChallengeRequest.dateEnd())
+                            .description(createChallengeRequest.description())
+                            .typeSport(createChallengeRequest.typeSport())
+                            .collaboratorChallenger(createChallengeRequest.collaboratorChallenger())
+                            .collaboratorChallenged(createChallengeRequest.collaboratorChallenged())
+                            .workout(createChallengeRequest.workout())
+                            .isAchieved(createChallengeRequest.isAchieved())
+                            .build()));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping(path = "/{idChallenge}")
-    public Challenge findChallengeById(@PathVariable @Valid UUID idChallenge) {
-        return challengeService.findById(idChallenge);
+    public ResponseEntity<Challenge> findChallengeById(@PathVariable @Valid UUID idChallenge) {
+        try {
+            return ResponseEntity.ok(challengeService.findById(idChallenge));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping
-    public List<Challenge> findAllChallenge() {
-        return challengeService.findAll();
+    public ResponseEntity<List<Challenge>> findAllChallenge() {
+        try {
+            return ResponseEntity.ok(challengeService.findAll());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @PutMapping
-    public Challenge updateChallenge(@RequestBody @Valid UpdateChallengeRequest updateChallengeRequest) {
-        return challengeService.updateChallenge(
-                Challenge.builder()
-                        .challengeId(updateChallengeRequest.challengeId())
-                        .dateStart(updateChallengeRequest.dateStart())
-                        .dateEnd(updateChallengeRequest.dateEnd())
-                        .description(updateChallengeRequest.description())
-                        .typeSport(updateChallengeRequest.typeSport())
-                        .collaboratorChallenger(updateChallengeRequest.collaboratorChallenger())
-                        .collaboratorChallenged(updateChallengeRequest.collaboratorChallenged())
-                        .workout(updateChallengeRequest.workout())
-                        .isAchieved(updateChallengeRequest.isAchieved())
-                        .build());
+    @PutMapping("/update")
+    public ResponseEntity<Challenge> updateChallenge(@RequestBody @Valid UpdateChallengeRequest updateChallengeRequest) {
+        try {
+            return ResponseEntity.ok(challengeService.updateChallenge(
+                    Challenge.builder()
+                            .challengeId(updateChallengeRequest.challengeId())
+                            .dateStart(updateChallengeRequest.dateStart())
+                            .dateEnd(updateChallengeRequest.dateEnd())
+                            .description(updateChallengeRequest.description())
+                            .typeSport(updateChallengeRequest.typeSport())
+                            .collaboratorChallenger(updateChallengeRequest.collaboratorChallenger())
+                            .collaboratorChallenged(updateChallengeRequest.collaboratorChallenged())
+                            .workout(updateChallengeRequest.workout())
+                            .isAchieved(updateChallengeRequest.isAchieved())
+                            .build()));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @DeleteMapping(path = "/{challengeId}")
-    public void deleteChallenge(@PathVariable @Valid UUID challengeId) {
-        challengeService.deleteChallenge(challengeId);
+    @DeleteMapping(path = "/delete/{challengeId}")
+    public ResponseEntity<String> deleteChallenge(@PathVariable @Valid UUID challengeId) {
+        try {
+            challengeService.deleteChallenge(challengeId);
+            return ResponseEntity.ok("The user with the id : %s has been deleted !"
+                    .formatted(challengeId));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 
 @JsonAutoDetect(fieldVisibility = ANY)
-public record CreateChallengeRquest(
+public record CreateChallengeRequest(
         @NotNull LocalDateTime dateStart,
         @NotNull LocalDateTime dateEnd,
         @NotNull String description,

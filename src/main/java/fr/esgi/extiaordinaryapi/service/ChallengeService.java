@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static fr.esgi.extiaordinaryapi.utils.ChallengeInitializer.updateStateChallenge;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -37,21 +39,15 @@ public class ChallengeService {
                 .findChallengeByChallengeId(challengeId)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
 
-        existingChallenge.setDateStart(challenge.getDateStart());
-        existingChallenge.setDateEnd(challenge.getDateEnd());
-        existingChallenge.setDescription(challenge.getDescription());
-        existingChallenge.setTypeSport(challenge.getTypeSport());
-        existingChallenge.setCollaboratorChallenger(challenge.getCollaboratorChallenger());
-        existingChallenge.setCollaboratorChallenged(challenge.getCollaboratorChallenged());
-        existingChallenge.setWorkout(challenge.getWorkout());
-        existingChallenge.setAchieved(challenge.isAchieved());
+        updateStateChallenge(challenge, existingChallenge);
         return challengeRepository.save(existingChallenge);
     }
 
+
     public void deleteChallenge(UUID challengeId) {
-        Challenge foundedChallenge = challengeRepository
+        Challenge existingChallenge = challengeRepository
                 .findChallengeByChallengeId(challengeId)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
-        challengeRepository.delete(foundedChallenge);
+        challengeRepository.delete(existingChallenge);
     }
 }

@@ -9,6 +9,8 @@ public final class ChallengeException extends RuntimeException {
     }
 
     public static ChallengeException notFoundAccountId(UUID challengeId) {
-        return new ChallengeException(String.format("%s not found.", challengeId.toString()));
+        return new ChallengeException(String
+                .format("the challenge with the id : %s was not found.",
+                        challengeId.toString()));
     }
 }
