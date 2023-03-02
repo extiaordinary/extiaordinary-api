@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,13 +14,21 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SeanceService {
 
-    private static final int MAX_POINT = 445;
+    private final int MAX_POINT = 445;
 
     private final SeanceRepository seanceRepository;
 
     public SeanceEntity createSeance(SeanceEntity seance) {
-
         try {
+            if (seance.getRewardPoint() > MAX_POINT) {
+                throw new IllegalArgumentException("Reward point is too high");
+            }
+            if (seance.getDateStart().isAfter(seance.getDateEnd())) {
+                throw new IllegalArgumentException("Date start is after date end");
+            }
+            if (seance.getDateStart().isAfter(LocalDateTime.now())) {
+                throw new IllegalArgumentException("Date start is before now");
+            }
             return seanceRepository.save(seance);
         } catch (Exception e) {
             log.error("Error while creating seance", e);
@@ -28,11 +37,25 @@ public class SeanceService {
     }
 
     public SeanceEntity updateSeance(SeanceEntity seance) {
-        val findSeance = seanceRepository.findById(seance.getId());
+        if (seance.getRewardPoint() > MAX_POINT) {
+            throw new IllegalArgumentException("Reward point is too high");
+        }
+        val findSeance = seanceRepository.findById(seance.getSeanceId());
         if (findSeance.isEmpty()) {
             throw new IllegalArgumentException("Seance not found");
         }
-        return createSeance(seance);
+        return createSeance(
+                SeanceEntity.builder()
+                        .seanceId(seance.getSeanceId())
+                        .name(seance.getName())
+                        .description(seance.getDescription())
+                        .dateStart(seance.getDateStart())
+                        .dateEnd(seance.getDateEnd())
+                        .rewardPoint(seance.getRewardPoint())
+                        .coachId(seance.getCoachId())
+                        .creationDate(findSeance.get().getCreationDate())
+                        .build()
+        );
     }
 
     public SeanceEntity getSeanceById(UUID id) {
@@ -59,7 +82,6 @@ public class SeanceService {
             throw new RuntimeException("Error while deleting seance", e);
         }
     }
-
 
 
 }

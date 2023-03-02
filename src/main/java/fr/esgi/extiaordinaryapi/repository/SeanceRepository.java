@@ -10,6 +10,5 @@ import java.util.UUID;
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 
 @Repository
-@Transactional(propagation = MANDATORY)
 public interface SeanceRepository extends JpaRepository<SeanceEntity, UUID> {
 }

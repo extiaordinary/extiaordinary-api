@@ -1,59 +1,50 @@
 package fr.esgi.extiaordinaryapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "T_SEANCE")
-public class SeanceEntity{
+@Entity
+@Table(name = "T_Seance")
+public class SeanceEntity {
 
-    @jakarta.persistence.Id
-    @Id @EqualsAndHashCode.Include
-    private UUID id;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true, updatable = false)
     @NotNull
-    @JsonProperty("date_start")
+    private UUID seanceId;
+
+    @Column(nullable = false)
     private LocalDateTime dateStart;
 
-    @NotNull
-    @JsonProperty("date_end")
+    @Column(nullable = false)
     private LocalDateTime dateEnd;
 
-    @NotNull
-    @JsonProperty("name")
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @NotNull
-    @JsonProperty("description")
+
+    @Column(nullable = false)
     private String description;
 
-    @NotNull
-    @Builder.Default
-    private UUID coachId = UUID.randomUUID();
 
-    @NotNull
-    @Builder.Default
-    @JsonProperty("reward_point")
-    private int rewardPoint = 10;
+    @Column(nullable = false)
+    private UUID coachId;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
-    public UUID getId() {
-        return id;
-    }
+    @Column(nullable = false)
+    private int rewardPoint;
+
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime creationDate;
 }
