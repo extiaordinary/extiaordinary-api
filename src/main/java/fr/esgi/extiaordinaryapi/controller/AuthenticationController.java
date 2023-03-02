@@ -20,13 +20,13 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<JwtTokenResponse> register(
+    public ResponseEntity<Object> register(
             @RequestBody @Valid RegisterRequest request
     ) {
         try {
             return ResponseEntity.ok(authenticationService.registerUser(request));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
