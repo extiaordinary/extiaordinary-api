@@ -33,7 +33,7 @@ public class SeanceService {
             if (seance.getRewardPoint() > MAX_POINT) {
                 throw new IllegalArgumentException("Reward point is too high");
             }
-        if (seance.getDateStart().isAfter(seance.getDateEnd())) {
+            if (seance.getDateStart().isAfter(seance.getDateEnd())) {
                 throw new IllegalArgumentException("Date start is after date end");
             }
             if (seance.getDateStart().isBefore(LocalDateTime.now())) {
@@ -53,7 +53,7 @@ public class SeanceService {
         }
         val findSeance = seanceRepository.findById(seance.getSeanceId());
         findSeance(user, findSeance);
-        val seanceUpdated =  createSeance(
+        val seanceUpdated = createSeance(
                 Seance.builder()
                         .seanceId(seance.getSeanceId())
                         .name(seance.getName())
@@ -66,15 +66,15 @@ public class SeanceService {
                         .coach(seance.getCoach())
                         .build()
         );
-        List<User>  userPlay = userRepository.findAllBySeancesPlayed(Seance.builder().seanceId(seance.getSeanceId()).build());
-        return SeanceInitializer.updateSeance(seanceUpdated, userPlay );
+        List<User> userPlay = userRepository.findAllBySeancesPlayed(Seance.builder().seanceId(seance.getSeanceId()).build());
+        return SeanceInitializer.updateSeance(seanceUpdated, userPlay);
     }
 
     private void findSeance(User user, Optional<Seance> findSeance) {
         if (findSeance.isEmpty()) {
             throw new IllegalArgumentException("Seance not found");
         }
-        if(findSeance.get().getCoach().getUserId() != user.getUserId()) {
+        if (findSeance.get().getCoach().getUserId() != user.getUserId()) {
             throw new IllegalArgumentException("User is not coach");
         }
         val localDateTime = LocalDateTime.now();
@@ -88,8 +88,8 @@ public class SeanceService {
         if (findSeance.isEmpty()) {
             throw new IllegalArgumentException("Seance not found");
         }
-        List<User>  userPlay = userRepository.findAllBySeancesPlayed(Seance.builder().seanceId(id).build());
-        return SeanceInitializer.updateSeance(findSeance.get(), userPlay );
+        List<User> userPlay = userRepository.findAllBySeancesPlayed(Seance.builder().seanceId(id).build());
+        return SeanceInitializer.updateSeance(findSeance.get(), userPlay);
     }
 
     public List<SeanceListResponse> getSeances() {

@@ -13,6 +13,7 @@ import java.util.UUID;
 public interface ChallengeRepository extends JpaRepository<Challenge, UUID> {
     @Query("select c from Challenge c where c.collaboratorChallenged.userId = ?1")
     List<Challenge> findByCollaboratorChallenged_UserId(UUID userId);
+
     @Query("select c from Challenge c where c.collaboratorChallenger.userId = ?1")
     List<Challenge> findByCollaboratorChallenger_UserId(UUID userId);
 

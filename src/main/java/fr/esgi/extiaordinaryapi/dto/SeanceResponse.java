@@ -15,4 +15,5 @@ public record SeanceResponse(
         String image,
 
         List<UserResponse> participants
-){}
+) {
+}

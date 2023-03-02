@@ -15,7 +15,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userRepository.findByEmail(details.getUsername()).orElseThrow(() -> new RuntimeException("user not found"));
     }

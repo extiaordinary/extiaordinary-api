@@ -10,7 +10,7 @@ import java.util.Set;
 
 public interface SeanceInitializer {
 
-    static SeanceResponse updateSeance(Seance seance, List<User> participants){
+    static SeanceResponse updateSeance(Seance seance, List<User> participants) {
         return new SeanceResponse(
                 seance.getSeanceId().toString(),
                 seance.getName(),
@@ -27,7 +27,7 @@ public interface SeanceInitializer {
 
     }
 
-    static SeanceResponse updateSeance(Seance seance, Set<User> participants){
+    static SeanceResponse updateSeance(Seance seance, Set<User> participants) {
         return new SeanceResponse(
                 seance.getSeanceId().toString(),
                 seance.getName(),
@@ -44,7 +44,7 @@ public interface SeanceInitializer {
 
     }
 
-    static List<SeanceListResponse> listSeanceResponse(List<Seance> seances){
+    static List<SeanceListResponse> listSeanceResponse(List<Seance> seances) {
         return seances.stream()
                 .map(seance -> new SeanceListResponse(
                         seance.getSeanceId().toString(),

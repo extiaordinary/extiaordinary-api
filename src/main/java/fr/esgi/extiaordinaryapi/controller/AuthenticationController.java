@@ -1,6 +1,5 @@
 package fr.esgi.extiaordinaryapi.controller;
 
-import fr.esgi.extiaordinaryapi.dto.JwtTokenResponse;
 import fr.esgi.extiaordinaryapi.dto.LoginRequest;
 import fr.esgi.extiaordinaryapi.dto.RegisterRequest;
 import fr.esgi.extiaordinaryapi.service.AuthenticationService;

@@ -5,7 +5,7 @@ import fr.esgi.extiaordinaryapi.entity.User;
 
 public interface UserInitializer {
 
-    static UserResponse  mappingUserResponse(User user){
+    static UserResponse mappingUserResponse(User user) {
         return new UserResponse(
                 user.getFirstName(),
                 user.getLastName(),

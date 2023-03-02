@@ -4,9 +4,7 @@ import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
 import fr.esgi.extiaordinaryapi.dto.UpdateChallengeRequest;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.service.ChallengeService;
-import fr.esgi.extiaordinaryapi.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +18,7 @@ import java.util.UUID;
 public class ChallengeController {
 
     private final ChallengeService challengeService;
+
     @GetMapping(path = "/ownChallenges/{collaboratorChallengerId}")
     public ResponseEntity<Object> ownChallenges(@PathVariable @Valid UUID collaboratorChallengerId) {
         try {

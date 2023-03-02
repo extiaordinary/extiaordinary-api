@@ -10,9 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static fr.esgi.extiaordinaryapi.utils.ChallengeInitializer.updateStateChallenge;
@@ -25,16 +23,16 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserService userService;
 
-    public List<Challenge> findOwnChallenge(UUID collaboratorChallengedId){
+    public List<Challenge> findOwnChallenge(UUID collaboratorChallengedId) {
         return challengeRepository.findByCollaboratorChallenger_UserId(collaboratorChallengedId);
     }
 
-    public List<Challenge> findToDoChallenge(){
+    public List<Challenge> findToDoChallenge() {
         User collaboratorChallenged = userService.getCurrentUser();
         return challengeRepository.findByCollaboratorChallenged_UserId(collaboratorChallenged.getUserId());
     }
 
-    public Challenge acceptChallenge(UUID challengeId){
+    public Challenge acceptChallenge(UUID challengeId) {
         User collaboratorChallenged = userService.getCurrentUser();
         Challenge foundChallenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
