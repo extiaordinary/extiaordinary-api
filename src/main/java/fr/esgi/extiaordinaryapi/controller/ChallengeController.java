@@ -21,6 +21,24 @@ public class ChallengeController {
     private final ChallengeService challengeService;
     private final UserService userService;
 
+    @GetMapping(path = "/ownChallenges")
+    public ResponseEntity<Object> ownChallenges() {
+        try {
+            return ResponseEntity.ok(challengeService.findOwnChallenge());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
+    @GetMapping(path = "/toDoChallenges")
+    public ResponseEntity<Object> toDoChallenges() {
+        try {
+            return ResponseEntity.ok(challengeService.findToDoChallenge());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
     @PostMapping(path = "/accept/{challengeId}")
     public ResponseEntity<Object> acceptChallenge(@PathVariable @Valid UUID challengeId) {
         try {

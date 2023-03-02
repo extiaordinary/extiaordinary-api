@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,6 +24,16 @@ public class ChallengeService {
 
     private final ChallengeRepository challengeRepository;
     private final UserService userService;
+
+    public List<Challenge> findOwnChallenge(){
+        User collaboratorChallenged = userService.getCurrentUser();
+        return challengeRepository.findByCollaboratorChallenger_UserId(collaboratorChallenged.getUserId());
+    }
+
+    public List<Challenge> findToDoChallenge(){
+        User collaboratorChallenged = userService.getCurrentUser();
+        return challengeRepository.findByCollaboratorChallenged_UserId(collaboratorChallenged.getUserId());
+    }
 
     public Challenge acceptChallenge(UUID challengeId){
         User collaboratorChallenged = userService.getCurrentUser();
