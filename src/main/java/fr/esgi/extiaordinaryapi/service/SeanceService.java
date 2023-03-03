@@ -1,5 +1,6 @@
 package fr.esgi.extiaordinaryapi.service;
 
+import fr.esgi.extiaordinaryapi.dto.InSeanceResponse;
 import fr.esgi.extiaordinaryapi.dto.SeanceListResponse;
 import fr.esgi.extiaordinaryapi.dto.SeanceResponse;
 import fr.esgi.extiaordinaryapi.entity.Seance;
@@ -151,4 +152,16 @@ public class SeanceService {
         List<Seance> seances = user.getSeancesPlayed().stream().toList();
         return SeanceInitializer.listSeanceResponse(seances);
     }
+
+    public InSeanceResponse isUserInSeance(UUID idSeance, User user) {
+        val findSeance = seanceRepository.findById(idSeance);
+        if (findSeance.isEmpty()) {
+            throw new IllegalArgumentException("Seance not found");
+        }
+        return new  InSeanceResponse(
+                findSeance.get().getCoach().getUserId() == user.getUserId(),
+                user.getSeancesPlayed().contains(findSeance.get())
+        );
+    }
+
 }
