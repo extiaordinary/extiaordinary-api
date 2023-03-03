@@ -1,5 +1,6 @@
 package fr.esgi.extiaordinaryapi.controller;
 
+import fr.esgi.extiaordinaryapi.dto.UserResponse;
 import fr.esgi.extiaordinaryapi.entity.User;
 import fr.esgi.extiaordinaryapi.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,10 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsersByPointsDesc() {
         return userService.getAllUsersByPointsDesc();
+    }
+
+    @GetMapping("/me")
+    public UserResponse getMe() {
+        return userService.getMe();
     }
 }

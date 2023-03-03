@@ -1,7 +1,9 @@
 package fr.esgi.extiaordinaryapi.service;
 
+import fr.esgi.extiaordinaryapi.dto.UserResponse;
 import fr.esgi.extiaordinaryapi.entity.User;
 import fr.esgi.extiaordinaryapi.repository.UserRepository;
+import fr.esgi.extiaordinaryapi.utils.UserInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,4 +26,7 @@ public class UserService {
         return userRepository.findAllUsersOrderByPointsDesc();
     }
 
+    public UserResponse getMe() {
+        return userRepository.findById(getCurrentUser().getUserId()).map(UserInitializer::mappingUserResponse).orElseThrow(() -> new RuntimeException("user not found"));
+    }
 }
