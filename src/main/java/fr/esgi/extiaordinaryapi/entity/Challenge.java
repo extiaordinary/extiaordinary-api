@@ -62,5 +62,5 @@ public class Challenge {
 
     @Column(name = "tag")
     @NotNull
-    private String tag;
+    private TAG tag;
 }

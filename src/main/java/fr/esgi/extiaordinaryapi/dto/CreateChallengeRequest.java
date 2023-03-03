@@ -3,6 +3,7 @@ package fr.esgi.extiaordinaryapi.dto;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.esgi.extiaordinaryapi.entity.TAG;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

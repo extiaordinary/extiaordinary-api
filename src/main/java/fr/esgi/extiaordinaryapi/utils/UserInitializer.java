@@ -8,6 +8,7 @@ public interface UserInitializer {
     static UserResponse mappingUserResponse(User user) {
         if (user != null){
             return new UserResponse(
+                    user.getUserId(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getEmail()

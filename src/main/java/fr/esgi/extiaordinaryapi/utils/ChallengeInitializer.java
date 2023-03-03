@@ -3,7 +3,6 @@ package fr.esgi.extiaordinaryapi.utils;
 import fr.esgi.extiaordinaryapi.dto.ChallengeResponse;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 
-import java.util.List;
 
 public interface ChallengeInitializer {
 
@@ -30,7 +29,7 @@ public interface ChallengeInitializer {
                 UserInitializer.mappingUserResponse(challenge.getCollaboratorChallenged()),
                 challenge.getWorkout(),
                 challenge.getIsAchieved(),
-                challenge.getTag()
+                challenge.getTag().toString()
         );
     }
 }

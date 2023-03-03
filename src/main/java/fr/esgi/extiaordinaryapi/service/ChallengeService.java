@@ -3,6 +3,7 @@ package fr.esgi.extiaordinaryapi.service;
 import fr.esgi.extiaordinaryapi.dto.ChallengeResponse;
 import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
+import fr.esgi.extiaordinaryapi.entity.TAG;
 import fr.esgi.extiaordinaryapi.entity.User;
 import fr.esgi.extiaordinaryapi.exception.ChallengeException;
 import fr.esgi.extiaordinaryapi.repository.ChallengeRepository;
@@ -55,7 +56,7 @@ public class ChallengeService {
                 .collaboratorChallenged(null)
                 .workout(createChallengeRequest.workout())
                 .isAchieved(createChallengeRequest.isAchieved())
-                .tag(createChallengeRequest.tag())
+                .tag(TAG.valueOf(createChallengeRequest.tag()))
                 .build();
         return ChallengeInitializer.mapToChallenge(challengeRepository.save(challenge));
     }
