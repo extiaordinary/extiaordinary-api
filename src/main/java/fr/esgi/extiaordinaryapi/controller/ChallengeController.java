@@ -47,6 +47,15 @@ public class ChallengeController {
         }
     }
 
+    @PostMapping(path = "/achieve/{challengeId}")
+    public ResponseEntity<Object> achieveChallenge(@PathVariable @Valid UUID challengeId) {
+        try {
+            return ResponseEntity.ok(challengeService.acceptChallenge(challengeId));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
     @PostMapping(path = "/add")
     public ResponseEntity<Object> createChallenge(@RequestBody @Valid CreateChallengeRequest createChallengeRequest) {
         try {

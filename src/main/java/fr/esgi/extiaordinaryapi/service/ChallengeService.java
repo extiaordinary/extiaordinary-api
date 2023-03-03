@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+import static fr.esgi.extiaordinaryapi.entity.TAG.*;
 import static fr.esgi.extiaordinaryapi.utils.ChallengeInitializer.updateStateChallenge;
 
 @Slf4j
@@ -51,6 +52,27 @@ public class ChallengeService {
         Challenge foundChallenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
         foundChallenge.setCollaboratorChallenged(collaboratorChallenged);
+        return ChallengeInitializer.mapToChallenge(challengeRepository.save(foundChallenge));
+    }
+
+    public ChallengeResponse achieveChallenge(UUID challengeId) {
+        User collaboratorChallenged = userService.getCurrentUser();
+        Challenge foundChallenge = challengeRepository.findById(challengeId)
+                .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
+        TAG foundedTag = foundChallenge.getTag();
+        switch (foundedTag) {
+            case LOW -> {
+                collaboratorChallenged.setPoints(collaboratorChallenged.getPoints() + LOW.ordinal());
+            }
+            case MEDIUM -> {
+                collaboratorChallenged.setPoints(collaboratorChallenged.getPoints() + MEDIUM.ordinal());
+            }
+            case HIGH -> {
+                collaboratorChallenged.setPoints(collaboratorChallenged.getPoints() + HIGH.ordinal());
+            }
+        }
+        userService.saveUser(collaboratorChallenged);
+        foundChallenge.setIsAchieved(true);
         return ChallengeInitializer.mapToChallenge(challengeRepository.save(foundChallenge));
     }
 
