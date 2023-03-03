@@ -2,9 +2,7 @@ package fr.esgi.extiaordinaryapi.controller;
 
 import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
 import fr.esgi.extiaordinaryapi.dto.UpdateChallengeRequest;
-import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.service.ChallengeService;
-import fr.esgi.extiaordinaryapi.service.SeanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +48,7 @@ public class ChallengeController {
     @PostMapping(path = "/achieve/{challengeId}")
     public ResponseEntity<Object> achieveChallenge(@PathVariable @Valid UUID challengeId) {
         try {
-            return ResponseEntity.ok(challengeService.acceptChallenge(challengeId));
+            return ResponseEntity.ok(challengeService.achieveChallenge(challengeId));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
