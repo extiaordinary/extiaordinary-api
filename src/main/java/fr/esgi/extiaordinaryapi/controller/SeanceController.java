@@ -123,4 +123,13 @@ public class SeanceController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/isUserInSeance/{seanceId}")
+    public ResponseEntity<Object> isUserInSeance(@PathVariable UUID seanceId) {
+        try {
+            return ResponseEntity.ok(seanceService.isUserInSeance(seanceId, userService.getCurrentUser()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
