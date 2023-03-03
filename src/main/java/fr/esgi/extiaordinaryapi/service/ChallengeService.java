@@ -1,10 +1,12 @@
 package fr.esgi.extiaordinaryapi.service;
 
+import fr.esgi.extiaordinaryapi.dto.ChallengeResponse;
 import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.entity.User;
 import fr.esgi.extiaordinaryapi.exception.ChallengeException;
 import fr.esgi.extiaordinaryapi.repository.ChallengeRepository;
+import fr.esgi.extiaordinaryapi.utils.ChallengeInitializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -23,24 +25,26 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserService userService;
 
-    public List<Challenge> findOwnChallenge(UUID collaboratorChallengedId) {
-        return challengeRepository.findByCollaboratorChallenger_UserId(collaboratorChallengedId);
+    public List<ChallengeResponse> findOwnChallenge(UUID collaboratorChallengedId) {
+        List<Challenge> challenge = challengeRepository.findByCollaboratorChallenger_UserId(collaboratorChallengedId);
+        return challenge.stream().map(ChallengeInitializer::mapToChallenge).toList();
     }
 
-    public List<Challenge> findToDoChallenge() {
+    public List<ChallengeResponse> findToDoChallenge() {
         User collaboratorChallenged = userService.getCurrentUser();
-        return challengeRepository.findByCollaboratorChallenged_UserId(collaboratorChallenged.getUserId());
+        List<Challenge> challenge = challengeRepository.findByCollaboratorChallenged_UserId(collaboratorChallenged.getUserId());
+        return challenge.stream().map(ChallengeInitializer::mapToChallenge).toList();
     }
 
-    public Challenge acceptChallenge(UUID challengeId) {
+    public ChallengeResponse acceptChallenge(UUID challengeId) {
         User collaboratorChallenged = userService.getCurrentUser();
         Challenge foundChallenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
         foundChallenge.setCollaboratorChallenged(collaboratorChallenged);
-        return challengeRepository.save(foundChallenge);
+        return ChallengeInitializer.mapToChallenge(challengeRepository.save(foundChallenge));
     }
 
-    public Challenge createChallenge(CreateChallengeRequest createChallengeRequest) {
+    public ChallengeResponse createChallenge(CreateChallengeRequest createChallengeRequest) {
         val userChallenger = userService.getCurrentUser();
         Challenge challenge = Challenge.builder()
                 .dateStart(createChallengeRequest.dateStart())
@@ -53,27 +57,28 @@ public class ChallengeService {
                 .isAchieved(createChallengeRequest.isAchieved())
                 .tag(createChallengeRequest.tag())
                 .build();
-        return challengeRepository.save(challenge);
+        return ChallengeInitializer.mapToChallenge(challengeRepository.save(challenge));
     }
 
-    public Challenge findById(UUID challengeId) {
+    public ChallengeResponse findById(UUID challengeId) {
         return challengeRepository
                 .findChallengeByChallengeId(challengeId)
+                .map(ChallengeInitializer::mapToChallenge)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
     }
 
-    public List<Challenge> findAll() {
-        return challengeRepository.findAll();
+    public List<ChallengeResponse> findAll() {
+        return challengeRepository.findAll().stream().map(ChallengeInitializer::mapToChallenge).toList();
     }
 
-    public Challenge updateChallenge(Challenge challenge) {
+    public ChallengeResponse updateChallenge(Challenge challenge) {
         UUID challengeId = challenge.getChallengeId();
         var existingChallenge = challengeRepository
                 .findChallengeByChallengeId(challengeId)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
 
         updateStateChallenge(challenge, existingChallenge);
-        return challengeRepository.save(existingChallenge);
+        return ChallengeInitializer.mapToChallenge(challengeRepository.save(existingChallenge));
     }
 
     public void deleteChallenge(UUID challengeId) {
