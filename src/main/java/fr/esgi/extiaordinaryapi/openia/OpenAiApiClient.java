@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +30,7 @@ public class OpenAiApiClient {
         var request = HttpRequest.newBuilder().uri(selectUri(service))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + openaiApiKey)
-                .POST(BodyPublishers.ofString(requestBodyAsJson)).build();
+                .POST(BodyPublishers.ofString(requestBodyAsJson)).timeout(Duration.ofMinutes(1)).build();
         return client.send(request, HttpResponse.BodyHandlers.ofString()).body();
     }
 
