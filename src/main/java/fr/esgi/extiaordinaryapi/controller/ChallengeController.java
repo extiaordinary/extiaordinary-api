@@ -4,6 +4,7 @@ import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
 import fr.esgi.extiaordinaryapi.dto.UpdateChallengeRequest;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.service.ChallengeService;
+import fr.esgi.extiaordinaryapi.service.SeanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,18 +77,7 @@ public class ChallengeController {
     @PutMapping("/update")
     public ResponseEntity<Object> updateChallenge(@RequestBody @Valid UpdateChallengeRequest updateChallengeRequest) {
         try {
-            return ResponseEntity.ok(challengeService.updateChallenge(
-                    Challenge.builder()
-                            .challengeId(updateChallengeRequest.challengeId())
-                            .dateStart(updateChallengeRequest.dateStart())
-                            .dateEnd(updateChallengeRequest.dateEnd())
-                            .description(updateChallengeRequest.description())
-                            .typeSport(updateChallengeRequest.typeSport())
-                            .collaboratorChallenger(updateChallengeRequest.collaboratorChallenger())
-                            .collaboratorChallenged(updateChallengeRequest.collaboratorChallenged())
-                            .workout(updateChallengeRequest.workout())
-                            .isAchieved(updateChallengeRequest.isAchieved())
-                            .build()));
+            return ResponseEntity.ok(challengeService.updateChallenge(updateChallengeRequest));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }

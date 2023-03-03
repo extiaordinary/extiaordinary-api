@@ -2,6 +2,7 @@ package fr.esgi.extiaordinaryapi.service;
 
 import fr.esgi.extiaordinaryapi.dto.UserResponse;
 import fr.esgi.extiaordinaryapi.entity.User;
+import fr.esgi.extiaordinaryapi.exception.UserException;
 import fr.esgi.extiaordinaryapi.repository.UserRepository;
 import fr.esgi.extiaordinaryapi.utils.UserInitializer;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,14 @@ public class UserService {
     }
 
     public UserResponse getMe() {
-        return userRepository.findById(getCurrentUser().getUserId()).map(UserInitializer::mappingUserResponse).orElseThrow(() -> new RuntimeException("user not found"));
+        User user = getCurrentUser();
+        if (user==null){
+            throw new UserException("No user authenticated");
+        }
+        return userRepository.findById(user.getUserId()).map(UserInitializer::mappingUserResponse).orElseThrow(() -> new RuntimeException("user not found"));
+    }
+
+    public User save(User user){
+        return userRepository.save(user);
     }
 }

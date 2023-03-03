@@ -2,6 +2,7 @@ package fr.esgi.extiaordinaryapi.service;
 
 import fr.esgi.extiaordinaryapi.dto.ChallengeResponse;
 import fr.esgi.extiaordinaryapi.dto.CreateChallengeRequest;
+import fr.esgi.extiaordinaryapi.dto.UpdateChallengeRequest;
 import fr.esgi.extiaordinaryapi.entity.Challenge;
 import fr.esgi.extiaordinaryapi.entity.TAG;
 import fr.esgi.extiaordinaryapi.entity.User;
@@ -25,6 +26,8 @@ public class ChallengeService {
 
     private final ChallengeRepository challengeRepository;
     private final UserService userService;
+    private final SeanceService seanceService;
+
 
     public List<ChallengeResponse> findOwnChallenge(UUID collaboratorChallengedId) {
         List<Challenge> challenge = challengeRepository.findByCollaboratorChallenger_UserId(collaboratorChallengedId);
@@ -39,6 +42,10 @@ public class ChallengeService {
 
     public ChallengeResponse acceptChallenge(UUID challengeId) {
         User collaboratorChallenged = userService.getCurrentUser();
+        if (collaboratorChallenged.getSeancesPlayed().size() > 0){
+            collaboratorChallenged.setPoints(collaboratorChallenged.getPoints()+1);
+            collaboratorChallenged = userService.save(collaboratorChallenged);
+        }
         Challenge foundChallenge = challengeRepository.findById(challengeId)
                 .orElseThrow(() -> ChallengeException.notFoundAccountId(challengeId));
         foundChallenge.setCollaboratorChallenged(collaboratorChallenged);
@@ -72,7 +79,19 @@ public class ChallengeService {
         return challengeRepository.findAll().stream().map(ChallengeInitializer::mapToChallenge).toList();
     }
 
-    public ChallengeResponse updateChallenge(Challenge challenge) {
+    public ChallengeResponse updateChallenge(UpdateChallengeRequest updateChallengeRequest) {
+        Challenge challenge =
+                Challenge.builder()
+                        .challengeId(updateChallengeRequest.challengeId())
+                        .dateStart(updateChallengeRequest.dateStart())
+                        .dateEnd(updateChallengeRequest.dateEnd())
+                        .description(updateChallengeRequest.description())
+                        .typeSport(updateChallengeRequest.typeSport())
+                        .collaboratorChallenger(updateChallengeRequest.collaboratorChallenger())
+                        .collaboratorChallenged(updateChallengeRequest.collaboratorChallenged())
+                        .workout(updateChallengeRequest.workout())
+                        .isAchieved(updateChallengeRequest.isAchieved())
+                        .build();
         UUID challengeId = challenge.getChallengeId();
         var existingChallenge = challengeRepository
                 .findChallengeByChallengeId(challengeId)
