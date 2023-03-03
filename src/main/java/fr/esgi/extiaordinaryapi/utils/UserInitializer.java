@@ -11,7 +11,10 @@ public interface UserInitializer {
                     user.getUserId(),
                     user.getFirstName(),
                     user.getLastName(),
-                    user.getEmail()
+                    user.getEmail(),
+                    user.getDateOfBirth(),
+                    user.getPoints(),
+                    user.getRole().toString()
             );
         }
         return null;

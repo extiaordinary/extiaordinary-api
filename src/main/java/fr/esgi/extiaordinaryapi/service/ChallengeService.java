@@ -8,6 +8,7 @@ import fr.esgi.extiaordinaryapi.entity.TAG;
 import fr.esgi.extiaordinaryapi.entity.User;
 import fr.esgi.extiaordinaryapi.exception.ChallengeException;
 import fr.esgi.extiaordinaryapi.repository.ChallengeRepository;
+import fr.esgi.extiaordinaryapi.repository.SeanceRepository;
 import fr.esgi.extiaordinaryapi.utils.ChallengeInitializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserService userService;
     private final SeanceService seanceService;
+    private final SeanceRepository seanceRepository;
 
 
     public List<ChallengeResponse> findOwnChallenge(UUID collaboratorChallengedId) {
@@ -54,6 +56,9 @@ public class ChallengeService {
 
     public ChallengeResponse createChallenge(CreateChallengeRequest createChallengeRequest) {
         val userChallenger = userService.getCurrentUser();
+        val workout = seanceRepository.findById(createChallengeRequest.workout());
+        if (workout.isEmpty()) throw new ChallengeException("Seance not assigne to this challenge");
+
         Challenge challenge = Challenge.builder()
                 .dateStart(createChallengeRequest.dateStart())
                 .dateEnd(createChallengeRequest.dateEnd())
@@ -61,7 +66,7 @@ public class ChallengeService {
                 .typeSport(createChallengeRequest.typeSport())
                 .collaboratorChallenger(userChallenger)
                 .collaboratorChallenged(null)
-                .workout(createChallengeRequest.workout())
+                .workout(workout.get())
                 .isAchieved(createChallengeRequest.isAchieved())
                 .tag(TAG.valueOf(createChallengeRequest.tag()))
                 .build();
@@ -80,6 +85,8 @@ public class ChallengeService {
     }
 
     public ChallengeResponse updateChallenge(UpdateChallengeRequest updateChallengeRequest) {
+        val workout = seanceRepository.findById(updateChallengeRequest.workout());
+        if (workout.isEmpty()) throw new ChallengeException("Seance not assigne to this challenge");
         Challenge challenge =
                 Challenge.builder()
                         .challengeId(updateChallengeRequest.challengeId())
@@ -89,7 +96,7 @@ public class ChallengeService {
                         .typeSport(updateChallengeRequest.typeSport())
                         .collaboratorChallenger(updateChallengeRequest.collaboratorChallenger())
                         .collaboratorChallenged(updateChallengeRequest.collaboratorChallenged())
-                        .workout(updateChallengeRequest.workout())
+                        .workout(workout.get())
                         .isAchieved(updateChallengeRequest.isAchieved())
                         .build();
         UUID challengeId = challenge.getChallengeId();
