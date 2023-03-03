@@ -27,7 +27,7 @@ public interface ChallengeInitializer {
                 challenge.getTypeSport(),
                 UserInitializer.mappingUserResponse(challenge.getCollaboratorChallenger()),
                 UserInitializer.mappingUserResponse(challenge.getCollaboratorChallenged()),
-                challenge.getWorkout(),
+                challenge.getWorkout().getSeanceId(),
                 challenge.getIsAchieved(),
                 challenge.getTag().toString()
         );

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public final class ChallengeException extends RuntimeException {
 
-    private ChallengeException(String message) {
+    public ChallengeException(String message) {
         super(message);
     }
 

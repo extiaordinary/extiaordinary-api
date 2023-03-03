@@ -52,9 +52,10 @@ public class Challenge {
     @JoinColumn(name = "collaboratorChallenged")
     private User collaboratorChallenged;
 
-    @Column(name = "workout")
     @NotNull
-    private UUID workout;
+    @ManyToOne
+    @JoinColumn(name = "seanceId")
+    private Seance workout;
 
     @Column(name = "achieved")
     @NotNull
